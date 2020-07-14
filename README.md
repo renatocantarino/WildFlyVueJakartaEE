@@ -6,6 +6,9 @@
 4. EJB
 5. CDI
 6. JNDI
+7. JMS (Produces e consumes)
+8. MDB (message driven beans)
+
 
 
 

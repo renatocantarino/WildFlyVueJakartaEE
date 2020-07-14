@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -24,10 +28,11 @@ import br.com.alura.Models.Agendamento;
 
 @Stateless
 @Logger
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class AgendamentoEmail {
 
 	@Inject
-	private ScheduleDAO _agendamento;
+	private ScheduleDAO _agendamentoRepository;
 
 	@Resource(lookup = "java:jboss/mail/AgendamentoMailSession")
 	private Session sessaoEmail;
@@ -38,13 +43,14 @@ public class AgendamentoEmail {
 
 	public List<Agendamento> Todos(Boolean enviados) {
 
-		return _agendamento.Todos(enviados);
+		return _agendamentoRepository.Todos(enviados);
 
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Agendamento Salvar(Agendamento agendamento) throws BusinessException {
 
-		return _agendamento.Salvar(agendamento);
+		return _agendamentoRepository.Salvar(agendamento);
 	}
 
 	public void Enviar(Agendamento agendamento) {
@@ -66,7 +72,7 @@ public class AgendamentoEmail {
 
 	 public void Enviada(Agendamento agendamento) {
 		agendamento.setEnviado(true);
-		_agendamento.Atualizar(agendamento);
+		_agendamentoRepository.Atualizar(agendamento);
 	}
 
 }

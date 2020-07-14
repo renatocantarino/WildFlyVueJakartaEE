@@ -5,6 +5,7 @@
 3. VueJS
 4. EJB
 5. CDI
+6. JNDI
 
 
 

@@ -1,4 +1,4 @@
-package br.com.alura.dto;
+package br.com.alura.Dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

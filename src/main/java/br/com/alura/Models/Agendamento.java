@@ -1,5 +1,7 @@
 package br.com.alura.Models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,26 +13,29 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Agendamento")
-public class Agendamento {
+public class Agendamento implements Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column
-	@NotBlank
-	@Email
+	@NotBlank(message = "{Agendamento.email.vazio}")
+	@Email(message = "{Agendamento.email.invalido}")
 	private String email;
 
 	@Column
 	private Boolean enviado;
 
 	@Column
-	@NotBlank
+	@NotBlank(message = "{Agendamento.assunto.vazio}")
 	private String assunto;
 
 	@Column
-	@NotBlank
+	@NotBlank(message = "{Agendamento.mensagem.vazio}")
 	private String mensagem;
 
 	public String getEmail() {
@@ -48,8 +53,6 @@ public class Agendamento {
 	public void setEnviado(Boolean enviado) {
 		this.enviado = enviado;
 	}
-	
-	
 
 	public String getAssunto() {
 		return assunto;

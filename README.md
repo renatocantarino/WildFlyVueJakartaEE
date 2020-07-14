@@ -3,13 +3,13 @@
 1. WildFly 20 
 2. JakartaEE
 3. VueJS
-4. EJB
+4. EJB (Annotations , Stateless, Statefull, JTA CMT, JTA BMT , Containner lifeCycle)
 5. CDI
 6. JNDI
-7. JMS (Produces e consumes)
+7. JMS (Queue, Dead Letter Queue(DLQ), Produces e consumes)
 8. MDB (message driven beans)
-
-
+9. Exceptions personalizadas (checked e unchecked)
+10. MySql
 
 
 CD C:\Users\XXXXXXX\Documents\wildfly20\wildfly-20.0.1.Final\bin
@@ -23,7 +23,12 @@ bin > jboss-cli.bat --connect
 
 # Configurando o Email no wildFly
 
-
 1. /subsystem=mail/mail-session=agendamentoMailSession:add(jndi-name=java:jboss/mail/AgendamentoMailSession)
 2. /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=my-smtp-binding:add(host=smtp.mailtrap.io, port=2525)
 3. /subsystem=mail/mail-session=agendamentoMailSession/server=smtp:add(outbound-socket-binding-ref= my-smtp-binding, username=bc82647d48b758, password=6320632ea13bd1, tls=true)
+
+# Configurando o JMS no wildFly
+
+1. jms-queue add --queue-address=EmailQueue --entries=java:/jms/queue/EmailQueue
+2. /subsystem=messaging-activemq/server=default/jms-queue=EmailQueue:list-messages
+3. /subsystem=messaging-activemq/server=default/jms-queue=DLQ:list-messages
